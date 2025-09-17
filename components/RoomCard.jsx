@@ -1,13 +1,16 @@
 // components/RoomCard.jsx
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaStar, FaRegHeart } from "react-icons/fa";
+import { FaStar, FaRegHeart, FaInfo } from "react-icons/fa";
 import { IoBedOutline } from "react-icons/io5";
 import { MdOutlineSquareFoot, MdOutlinePerson, MdOutlineLocationCity } from "react-icons/md";
 
 export default function RoomCard({ room }) {
-  const router=useRouter()
+  const router = useRouter();
+  const [showTooltip, setShowTooltip] = useState(false);
+
   return (
     <div className="bg-white p-2 rounded-[30px] shadow-sm overflow-hidden flex flex-col">
       {/* Image */}
@@ -17,9 +20,32 @@ export default function RoomCard({ room }) {
           alt={room.title}
           className="w-full h-56 object-cover rounded-[30px]"
         />
-        <button className="absolute top-2 right-2 bg-white rounded-full w-7 h-7 flex items-center justify-center shadow">
-          i
-        </button>
+        
+          <button 
+            className="absolute top-2 right-2 bg-white rounded-full w-7 h-7 flex items-center justify-center shadow hover:bg-gray-50 transition-colors"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            <FaInfo className="w-3 h-3 text-gray-600" />
+          </button>
+          
+          {/* Tooltip */}
+          {showTooltip && (
+            <div className="absolute top-10 right-2 bg-gray-900 text-white text-xs rounded-lg p-3 w-64 z-50 shadow-lg">
+              <div className="space-y-2">
+                <h4 className="font-semibold text-sm">Room Information</h4>
+                <p className="text-gray-200">• Free WiFi included</p>
+                <p className="text-gray-200">• Air conditioning</p>
+                <p className="text-gray-200">• Private bathroom</p>
+                <p className="text-gray-200">• Room service available</p>
+                <p className="text-gray-200">• City view from window</p>
+                <p className="text-gray-200">• Non-smoking room</p>
+                <p className="text-gray-200">• Daily housekeeping</p>
+              </div>
+              {/* Arrow */}
+              <div className="absolute -bottom-1 right-4 w-2 h-2 bg-gray-900 transform rotate-45"></div>
+            </div>
+          )}
       </div>
 
       {/* Content */}
@@ -61,7 +87,7 @@ export default function RoomCard({ room }) {
         </div>
            {/* Actions */}
            <div className="flex items-center sm:gap-4 gap-2 mt-4">
-            <button className="bg-blue-900 text-white px-4 py-2 rounded-2xl text-sm font-medium w-full text-center font-poppins-bold" onClick={()=>router.push('/book-now')}>
+            <button className="bg-blue-900 text-white px-4 py-2 rounded-2xl text-sm font-medium w-full text-center font-poppins-bold cursor-pointer" onClick={()=>router.push('/book-now')}>
               Reserve
             </button>
             <button className="p-1.5 bg-gray-200 flex items-center justify-center rounded-full ">

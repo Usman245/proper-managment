@@ -1,7 +1,58 @@
-import React from 'react';
+'use client'
+import React, { useState, useEffect, useRef } from 'react';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {
+  const [selectedLanguage, setSelectedLanguage] = useState('English');
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
+  const languageRef = useRef(null);
+  const currencyRef = useRef(null);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (languageRef.current && !languageRef.current.contains(event.target)) {
+        setIsLanguageOpen(false);
+      }
+      if (currencyRef.current && !currencyRef.current.contains(event.target)) {
+        setIsCurrencyOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const languages = [
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'es', name: 'Spanish', flag: '🇪🇸' },
+    { code: 'fr', name: 'French', flag: '🇫🇷' },
+    { code: 'de', name: 'German', flag: '🇩🇪' },
+    { code: 'it', name: 'Italian', flag: '🇮🇹' },
+    { code: 'pt', name: 'Portuguese', flag: '🇵🇹' },
+    { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
+    { code: 'ko', name: 'Korean', flag: '🇰🇷' },
+    { code: 'zh', name: 'Chinese', flag: '🇨🇳' },
+    { code: 'ar', name: 'Arabic', flag: '🇸🇦' }
+  ];
+
+  const currencies = [
+    { code: 'USD', name: 'US Dollar', symbol: '$' },
+    { code: 'EUR', name: 'Euro', symbol: '€' },
+    { code: 'GBP', name: 'British Pound', symbol: '£' },
+    { code: 'JPY', name: 'Japanese Yen', symbol: '¥' },
+    { code: 'CAD', name: 'Canadian Dollar', symbol: 'C$' },
+    { code: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
+    { code: 'CHF', name: 'Swiss Franc', symbol: 'CHF' },
+    { code: 'CNY', name: 'Chinese Yuan', symbol: '¥' },
+    { code: 'INR', name: 'Indian Rupee', symbol: '₹' },
+    { code: 'BRL', name: 'Brazilian Real', symbol: 'R$' }
+  ];
+
   return (
     <footer className="bg-white">
       {/* Upper Section */}
@@ -88,17 +139,93 @@ const Footer = () => {
 
           {/* Language and Currency Selectors */}
           <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-1">
-              <span className="font-montserrat-regular text-gray-600">English</span>
-              <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+            {/* Language Dropdown */}
+            <div className="relative" ref={languageRef}>
+              <button
+                onClick={() => {
+                  setIsLanguageOpen(!isLanguageOpen);
+                  setIsCurrencyOpen(false);
+                }}
+                className="flex items-center space-x-1 hover:text-gray-900 transition-colors"
+              >
+                <span className="font-montserrat-regular text-gray-600">{selectedLanguage}</span>
+                <svg 
+                  className={`w-4 h-4 text-gray-600 transition-transform ${isLanguageOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {isLanguageOpen && (
+                <div className="absolute bottom-full mb-2 left-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-48">
+                  <div className="py-2 max-h-60 overflow-y-auto">
+                    {languages.map((language) => (
+                      <button
+                        key={language.code}
+                        onClick={() => {
+                          setSelectedLanguage(language.name);
+                          setIsLanguageOpen(false);
+                        }}
+                        className={`w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors flex items-center space-x-3 ${
+                          selectedLanguage === language.name ? 'bg-blue-50 text-blue-900' : 'text-gray-700'
+                        }`}
+                      >
+                        <span className="text-lg">{language.flag}</span>
+                        <span className="font-montserrat-regular text-sm">{language.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="flex items-center space-x-1">
-              <span className="font-montserrat-regular text-gray-600">USD</span>
-              <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+
+            {/* Currency Dropdown */}
+            <div className="relative" ref={currencyRef}>
+              <button
+                onClick={() => {
+                  setIsCurrencyOpen(!isCurrencyOpen);
+                  setIsLanguageOpen(false);
+                }}
+                className="flex items-center space-x-1 hover:text-gray-900 transition-colors"
+              >
+                <span className="font-montserrat-regular text-gray-600">{selectedCurrency}</span>
+                <svg 
+                  className={`w-4 h-4 text-gray-600 transition-transform ${isCurrencyOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {isCurrencyOpen && (
+                <div className="absolute bottom-full mb-2 left-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-48">
+                  <div className="py-2 max-h-60 overflow-y-auto">
+                    {currencies.map((currency) => (
+                      <button
+                        key={currency.code}
+                        onClick={() => {
+                          setSelectedCurrency(currency.code);
+                          setIsCurrencyOpen(false);
+                        }}
+                        className={`w-full text-left px-4 py-2 hover:bg-gray-50 transition-colors flex items-center justify-between ${
+                          selectedCurrency === currency.code ? 'bg-blue-50 text-blue-900' : 'text-gray-700'
+                        }`}
+                      >
+                        <div className="flex items-center space-x-3">
+                          <span className="font-montserrat-regular text-sm">{currency.code}</span>
+                          <span className="font-montserrat-regular text-sm text-gray-500">{currency.name}</span>
+                        </div>
+                        <span className="font-montserrat-regular text-sm">{currency.symbol}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

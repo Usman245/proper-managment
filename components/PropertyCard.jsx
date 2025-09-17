@@ -1,6 +1,7 @@
 // components/PropertyCard.jsx
 "use client";
 
+import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { FaStar, FaWifi, FaSwimmer, FaUtensils, FaBriefcase, FaUmbrellaBeach, FaDumbbell, FaChevronRight, FaChevronLeft } from "react-icons/fa";
@@ -12,47 +13,75 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 export default function PropertyCard() {
+  const [checkInDate, setCheckInDate] = useState("");
+  const [checkOutDate, setCheckOutDate] = useState("");
+
   return (
     <div className="w-full bg-gray-50 p-4 md:p-8 rounded-lg shadow-sm">
         <div className="max-w-7xl mx-auto">
       {/* Search Bar */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-6">
         {/* Destination */}
-        <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-3 py-2 bg-white">
-          <IoLocationOutline className="text-gray-500" />
-          <input
-            type="text"
-            placeholder="Search destinations..."
-            className="outline-none flex-1 text-sm"
-          />
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">Where to?</label>
+          <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-3 py-2 bg-white">
+            <IoLocationOutline className="text-gray-500" />
+            <input
+              type="text"
+              placeholder="Search destinations..."
+              className="outline-none flex-1 text-sm"
+            />
+          </div>
         </div>
 
         {/* Check-in */}
-        <div className="flex items-center gap-2 border border-gray-300 rounded-xl px-3 py-2 bg-white">
-          <IoCalendarClearOutline className="text-gray-500" />
-          <input type="date" className="outline-none flex-1 text-sm" />
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">Check-in</label>
+          <div className="flex items-center gap-2 border border-gray-300 rounded-xl px-3 py-2 bg-white">
+            <IoCalendarClearOutline className="text-gray-500" />
+            <input 
+              type="date" 
+              value={checkInDate}
+              onChange={(e) => setCheckInDate(e.target.value)}
+              className="outline-none flex-1 text-sm"
+            />
+          </div>
         </div>
 
         {/* Check-out */}
-        <div className="flex items-center gap-2 border border-gray-300 rounded-xl px-3 py-2 bg-white">
-          <IoCalendarClearOutline className="text-gray-500" />
-          <input type="date" className="outline-none flex-1 text-sm" />
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">Check-out</label>
+          <div className="flex items-center gap-2 border border-gray-300 rounded-xl px-3 py-2 bg-white">
+            <IoCalendarClearOutline className="text-gray-500" />
+            <input 
+              type="date" 
+              value={checkOutDate}
+              onChange={(e) => setCheckOutDate(e.target.value)}
+              className="outline-none flex-1 text-sm"
+            />
+          </div>
         </div>
 
         {/* Guests */}
-        <div className="flex items-center gap-2 border border-gray-300 rounded-xl px-3 py-2 bg-white">
-          <MdOutlinePerson className="text-gray-500" />
-          <select className="outline-none flex-1 text-sm">
-            <option>2 Guests, 1 Room</option>
-            <option>3 Guests, 2 Rooms</option>
-          </select>
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700 mb-1">Guests</label>
+          <div className="flex items-center gap-2 border border-gray-300 rounded-xl px-3 py-2 bg-white">
+            <MdOutlinePerson className="text-gray-500" />
+            <select className="outline-none flex-1 text-sm">
+              <option>2 Guests, 1 Room</option>
+              <option>3 Guests, 2 Rooms</option>
+            </select>
+          </div>
         </div>
 
         {/* Search button */}
-        <button className="bg-blue-900 text-white flex items-center justify-center rounded-xl px-4 py-2 gap-2">
-          <IoSearch />
-          Search Homes
-        </button>
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-transparent mb-1">Search</label>
+          <button className="bg-blue-900 text-white flex items-center justify-center rounded-xl px-4 py-2 gap-2">
+            <IoSearch />
+            Search Homes
+          </button>
+        </div>
       </div>
 
       {/* Image Slider */}

@@ -1,6 +1,7 @@
 // components/Navbar.jsx
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { FiMenu, FiFilter } from "react-icons/fi";
 
@@ -13,16 +14,20 @@ export default function Navbar() {
     <header className="w-full bg-white shadow-sm relative">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
         {/* Logo */}
-        <div className="text-2xl font-bold text-blue-900">
+        <div className="flex gap-8 items-center justify-center">
+        <div className="text-2xl font-bold text-blue-900 mt-[-6px]">
+          <Link href='/'>
           Top Tier Travel
+          </Link>
+        </div>
+        <nav className="hidden md:flex space-x-8 text-gray-600 font-normal ">
+          <Link href="/hotels" className="hover:text-blue-900 transition">Hotels</Link>
+          <Link href="/support" className="hover:text-blue-900 transition">Contact</Link>
+          <Link href="/contact-us" className="hover:text-blue-900 transition">Support</Link>
+        </nav>
         </div>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden md:flex space-x-8 text-gray-600 font-normal">
-          <a href="#" className="hover:text-blue-900 transition">Hotels</a>
-          <a href="#" className="hover:text-blue-900 transition">Contact</a>
-          <a href="#" className="hover:text-blue-900 transition">Support</a>
-        </nav>
+      
 
         {/* Right Side Buttons */}
         <div className="flex items-center space-x-3 relative">
@@ -82,9 +87,9 @@ export default function Navbar() {
       {/* Mobile Nav Menu */}
       {isOpen && (
         <div className="md:hidden bg-white border-t px-4 py-3 space-y-2">
-          <a href="#" className="block text-gray-700 font-medium hover:text-blue-900">Hotels</a>
-          <a href="#" className="block text-gray-700 font-medium hover:text-blue-900">Contact</a>
-          <a href="#" className="block text-gray-700 font-medium hover:text-blue-900">Support</a>
+          <Link href="/hotels" className="block text-gray-700 font-medium hover:text-blue-900">Hotels</Link>
+          <Link href="/contact-us" className="block text-gray-700 font-medium hover:text-blue-900">Contact</Link>
+          <Link href="/support" className="block text-gray-700 font-medium hover:text-blue-900">Support</Link>
           <button
             className="flex items-center space-x-2 border rounded-xl px-4 py-2 w-full justify-center text-gray-700 hover:bg-gray-50"
             onClick={() => setFilterOpen(!filterOpen)}

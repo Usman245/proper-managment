@@ -1,8 +1,8 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
-import { FaStar, FaMapMarkerAlt, FaHeart, FaChevronRight } from 'react-icons/fa';
+import { FaStar, FaMapMarkerAlt, FaHeart, FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 import { useRouter } from "next/navigation";
 
 // Import Swiper styles
@@ -10,7 +10,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 const YouMightAlsoLike = () => {
-  const router=useRouter()
+  const router = useRouter();
+  const [hoveredProperty, setHoveredProperty] = useState(null);
 
   const properties = [
     {
@@ -130,7 +131,7 @@ const YouMightAlsoLike = () => {
         </div>
 
         {/* Swiper Carousel */}
-        <div className="relative pb-4">
+        <div className="relative pb-16">
           <Swiper
             modules={[Navigation]}
             spaceBetween={24}
@@ -185,8 +186,29 @@ const YouMightAlsoLike = () => {
 
                     {/* Location Icon */}
                     <div className="absolute top-3 right-3">
-                      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
+                      <div 
+                        className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors cursor-pointer relative"
+                        onMouseEnter={() => setHoveredProperty(property.id)}
+                        onMouseLeave={() => setHoveredProperty(null)}
+                      >
                         <FaMapMarkerAlt className="w-4 h-4 text-blue-500" />
+                        
+                        {/* Location Tooltip */}
+                        {hoveredProperty === property.id && (
+                          <div className="absolute top-10 right-0 bg-gray-900 text-white text-xs rounded-lg p-3 w-56 z-50 shadow-lg">
+                            <div className="space-y-2">
+                              <h4 className="font-semibold text-sm">Location Details</h4>
+                              <p className="text-gray-200">📍 {property.location}</p>
+                              <p className="text-gray-200">• 5 min walk to city center</p>
+                              <p className="text-gray-200">• 10 min drive to airport</p>
+                              <p className="text-gray-200">• Near public transport</p>
+                              <p className="text-gray-200">• Beach access available</p>
+                              <p className="text-gray-200">• Shopping district nearby</p>
+                            </div>
+                            {/* Arrow */}
+                            <div className="absolute -top-1 right-3 w-2 h-2 bg-gray-900 transform rotate-45"></div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -222,20 +244,21 @@ const YouMightAlsoLike = () => {
                         </span>
                         <span className="text-sm text-gray-500 ml-1">/night</span>
                       </div>
-                        {/* Availability */}
+                    </div>
+
+                    {/* Availability */}
                     <div className="flex items-center mb-4">
                       <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
                       <span className="text-green-600 text-sm font-medium">
                         {property.roomsLeft} rooms left
                       </span>
                     </div>
-                    </div>
 
                   
 
                     {/* Action Buttons */}
                     <div className="flex items-center space-x-3">
-                      <button className="flex-1 bg-blue-900 text-white py-2 px-4 rounded-full font-poppins-medium hover:bg-blue-700 transition-colors" onClick={()=>router.push('/book-now')}>
+                      <button className="flex-1 bg-blue-900 text-white py-2 px-4 rounded-full font-poppins-medium hover:bg-blue-700 transition-colors cursor-pointer" onClick={()=>router.push('/book-now')}>
                         Book now
                       </button>
                       <button className="w-10 h-10 bg-gray-200 border border-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors">
@@ -251,6 +274,11 @@ const YouMightAlsoLike = () => {
           {/* Custom Navigation Button */}
           <button className="custom-next-button absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
             <FaChevronRight className="w-4 h-4 text-gray-600" />
+          </button>
+          
+          {/* Custom Previous Button */}
+          <button className="custom-prev-button absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+            <FaChevronLeft className="w-4 h-4 text-gray-600" />
           </button>
         </div>
       </div>
