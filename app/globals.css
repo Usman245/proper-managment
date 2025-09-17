@@ -1,0 +1,64 @@
+@import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/navigation";
+
+/* Font Classes */
+.font-poppins {
+  font-family: var(--font-poppins), sans-serif;
+}
+
+.font-montserrat {
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+/* Poppins Weight Classes */
+.font-poppins-light {
+  font-family: var(--font-poppins), sans-serif;
+  font-weight: 300;
+}
+
+.font-poppins-regular {
+  font-family: var(--font-poppins), sans-serif;
+  font-weight: 400;
+}
+
+.font-poppins-medium {
+  font-family: var(--font-poppins), sans-serif;
+  font-weight: 500;
+}
+
+.font-poppins-semibold {
+  font-family: var(--font-poppins), sans-serif;
+  font-weight: 600;
+}
+
+.font-poppins-bold {
+  font-family: var(--font-poppins), sans-serif;
+  font-weight: 700;
+}
+
+/* Montserrat Weight Classes */
+.font-montserrat-light {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 300;
+}
+
+.font-montserrat-regular {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+}
+
+.font-montserrat-medium {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 500;
+}
+
+.font-montserrat-semibold {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 600;
+}
+
+.font-montserrat-bold {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+}
