@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FiMenu, FiFilter } from "react-icons/fi";
 
 export default function Navbar() {
@@ -10,20 +10,53 @@ export default function Navbar() {
   const [filterOpen, setFilterOpen] = useState(false); // filters dropdown
   const [menuOpen, setMenuOpen] = useState(false); // desktop menu dropdown
 
+  // Refs for dropdown containers
+  const filterRef = useRef(null);
+  const menuRef = useRef(null);
+  const mobileNavRef = useRef(null);
+
+  // Handle click outside to close dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Close filter dropdown if clicked outside
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        setFilterOpen(false);
+      }
+      
+      // Close menu dropdown if clicked outside
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+      
+      // Close mobile nav if clicked outside
+      if (mobileNavRef.current && !mobileNavRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    // Add event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    // Cleanup event listener
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <header className="w-full bg-white shadow-sm relative">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
         {/* Logo */}
         <div className="flex gap-8 items-center justify-center">
-        <div className="text-2xl font-bold text-blue-900 mt-[-6px]">
+        <div className="text-3xl font-bold text-blue-900 mt-[-6px] font-monteserrat">
           <Link href='/'>
           Top Tier Travel
           </Link>
         </div>
         <nav className="hidden md:flex space-x-8 text-gray-600 font-normal ">
           <Link href="/hotels" className="hover:text-blue-900 transition">Hotels</Link>
-          <Link href="/support" className="hover:text-blue-900 transition">Contact</Link>
-          <Link href="/contact-us" className="hover:text-blue-900 transition">Support</Link>
+          <Link href="/contact-us" className="hover:text-blue-900 transition">Contact</Link>
+          <Link href="/support" className="hover:text-blue-900 transition">Support</Link>
         </nav>
         </div>
 
@@ -32,7 +65,7 @@ export default function Navbar() {
         {/* Right Side Buttons */}
         <div className="flex items-center space-x-3 relative">
           {/* Filters Button */}
-          <div className="hidden md:block relative">
+          <div className="hidden md:block relative" ref={filterRef}>
             <button
               className="flex items-center space-x-2 border border-gray-400 rounded-xl px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
               onClick={() => {
@@ -56,7 +89,7 @@ export default function Navbar() {
           </div>
 
           {/* Menu Button */}
-          <div className="relative">
+          <div className="relative" ref={menuRef}>
             <button
               className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-400 text-blue-900 hover:bg-gray-50 transition"
               onClick={() => {
@@ -86,7 +119,7 @@ export default function Navbar() {
 
       {/* Mobile Nav Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t px-4 py-3 space-y-2">
+        <div className="md:hidden bg-white border-t px-4 py-3 space-y-2" ref={mobileNavRef}>
           <Link href="/hotels" className="block text-gray-700 font-medium hover:text-blue-900">Hotels</Link>
           <Link href="/contact-us" className="block text-gray-700 font-medium hover:text-blue-900">Contact</Link>
           <Link href="/support" className="block text-gray-700 font-medium hover:text-blue-900">Support</Link>

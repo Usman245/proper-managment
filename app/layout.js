@@ -1,6 +1,7 @@
 import { Poppins, Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/layout/Navbar";
+import Banner from "../components/layout/Banner";
 import Footer from "../components/layout/Footer";
 
 const poppins = Poppins({
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
         <main className="min-h-screen">
           {children}
         </main>
+        <Banner />
         <Footer />
       </body>
     </html>
