@@ -205,7 +205,7 @@ const Support = () => {
                       onClick={() => toggleFAQ(faq.id)}
                       className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition"
                     >
-                      <span className="font-medium text-gray-900">{faq.question}</span>
+                      <span className="font-medium text-gray-900">{`${faq.question}`}</span>
                       {expandedFAQ === faq.id ? (
                         <FaChevronUp className="w-4 h-4 text-gray-500" />
                       ) : (
@@ -214,7 +214,7 @@ const Support = () => {
                     </button>
                     {expandedFAQ === faq.id && (
                       <div className="px-6 pb-4">
-                        <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                        <p className="text-gray-600 leading-relaxed">{`${faq.answer}`}</p>
                       </div>
                     )}
                   </div>
