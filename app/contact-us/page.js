@@ -43,8 +43,8 @@ const ContactUs = () => {
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              Get in touch with our team. We're here to help you plan your perfect travel experience.
-            </p>
+  Get in touch with our team. We&apos;re here to help you plan your perfect travel experience.
+</p>
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Business Hours</h3>
-                    <p className="text-gray-600 mb-2">We're here to help</p>
+                    <p className="text-gray-600 mb-2">We&apos;re here to help</p>
                     <div className="text-gray-700 space-y-1">
                       <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
                       <p>Saturday: 10:00 AM - 4:00 PM</p>
